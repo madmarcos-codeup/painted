@@ -26,7 +26,6 @@ import java.util.Collections;
 
 @Service
 public class AuthBuddy {
-    private static final String API_KEY = "AIzaSyDtZGf2Mx93X_HCKMbdTiF8W03pjCDFA2c";
 
     @Autowired
     private UsersRepository usersRepository;
@@ -71,7 +70,7 @@ public class AuthBuddy {
         String [] fields = new String[2];
         RestTemplate restTemplate = new RestTemplate();
 
-        String uri = "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos&access_token=" + accessToken + "&key=" + API_KEY;
+        String uri = "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos&access_token=" + accessToken;
         System.out.println(uri);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
