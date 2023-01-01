@@ -1,0 +1,98 @@
+:root {
+    --bgcolor-menu: lightgrey;
+    --bgcolor-menu-text: black;
+    --bgcolor-menu-hover: darkgrey;
+    --bgcolor-menu-hover-text: white;
+}
+
+html {
+    margin: 0px;
+}
+
+body {
+    margin: 0px;
+}
+
+.app-content {
+    margin: 50px 10px 0 10px;
+
+}
+
+.home-content {
+    margin: 50px 0 0 0;
+
+}
+
+#addstory-form {
+    margin-right: 20px;
+}
+
+#addstory-container {
+    /*margin-right: 20px;*/
+}
+
+.vet-story {
+    /*margin: 10px 5px 10px 5px;*/
+    /*margin: 10px;*/
+}
+
+.edit-story-button {
+    float: right;
+    z-index: 1000;
+}
+
+.edit-story-link {
+    text-decoration: none;
+    color: darkgreen;
+}
+
+.edit-story-link:hover {
+    color: darkgreen;
+}
+
+#myNav {
+    /*padding-left: 20px;*/
+    height: 45px;
+    background-color: var(--bgcolor-menu);
+    line-height: 45px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+#login-photo {
+    height: 40px;
+    margin-top: -3px;
+    margin-right: 3px;
+}
+
+#login-name-div {
+    float: right;
+    margin-right: 15px;
+}
+
+#login-name {
+    color: black;
+}
+
+.my-link {
+    /*margin-right: 20px;*/
+    text-decoration: none;
+    color: black;
+    padding: 13px 15px;
+}
+
+.my-link:hover {
+    background-color: var(--bgcolor-menu-hover);
+    color: var(--bgcolor-menu-hover-text);
+}
+
+#notification-box {
+    margin-top: 50px;
+}
+
+.vet-photo-image {
+    max-width: 300px;
+    height: auto;
+}
