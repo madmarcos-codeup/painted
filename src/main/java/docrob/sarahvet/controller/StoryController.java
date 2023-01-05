@@ -68,9 +68,9 @@ public class StoryController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Story id " + id + " not found");
         }
         Story originalStory = optionalStory.get();
-        if(loggedInUser.getRole() != UserRole.ADMIN || loggedInUser.getId() != originalStory.getAuthor().getId()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
-        }
+//        if(loggedInUser.getRole() != UserRole.ADMIN || loggedInUser.getId() != originalStory.getAuthor().getId()) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+//        }
 
         storyRepository.deleteById(id);
     }
@@ -87,9 +87,9 @@ public class StoryController {
         }
         Story originalStory = optionalStory.get();
 
-        if(loggedInUser.getRole() != UserRole.ADMIN || loggedInUser.getId() != originalStory.getAuthor().getId()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
-        }
+//        if(loggedInUser.getRole() != UserRole.ADMIN || loggedInUser.getId() != originalStory.getAuthor().getId()) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+//        }
 
         // in case id is not in the request body (i.e., updatedPost), set it
         // with the path variable id

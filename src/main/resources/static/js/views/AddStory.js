@@ -6,6 +6,12 @@ let photoImageData = undefined;
 
 export default function addStory(props) {
     story = props.story;
+    if(story && story.photoData) {
+        photoImageData = story.photoData;
+    } else {
+        photoImageData = undefined;
+    }
+
     // console.log(story);
 
     const addStoryHTML = generateAddStoryHTML(props.story);
@@ -138,6 +144,8 @@ function saveStory(storyId) {
         story: storyContent.value,
         photoData: photoImageData
     }
+
+    // console.log(newStory);
 
     // make the request
     const request = {
