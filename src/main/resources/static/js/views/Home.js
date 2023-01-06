@@ -5,7 +5,7 @@ import {getHeaders, getUser, isLoggedIn} from "../auth.js";
 export default function Home(props) {
     let storyHTML = makeStoryHTML(props.stories);
     let html = `
-<div id="story-container" class="container-fluid home-content overflow-hidden">
+<div id="story-container" class="container-fluid home-content overflow-hidden gx-4">
     <div class="row">    
         ${storyHTML}
     </div>
@@ -38,16 +38,29 @@ function makeStoryHTML(stories) {
 
         const storyHTML = story.story.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+        let storyAudioHTML = "";
+        if(story.audioData) {
+            storyAudioHTML = `
+            <h6>Audio version</h6>
+            <audio id="vet_audio-${story.id}" 
+                        controls
+                        src="${!story || !story.audioData ? undefined : story.audioData}">                        
+                    </audio>
+            `;
+        }
         // console.log(story.photoURL);
         html += `
-<div id="story-${story.id}" class="col-xs-12 col-md-6 card vet-story">
-            <img class="pt-2 card-img-top img-circle profile-image" src="${!story.photoData ? "images/generic_male.jpeg" : story.photoData}" alt="Veteran's photo">
+<div id="story-${story.id}" class="col-2 col-md-4 card vet-story">
+            <div class="w-100 d-flex justify-content-center">
+                <img class="mt-2 border border-3-secondary w-75 pt-2 card-img-top img-circle profile-image" src="${!story.photoData ? "images/generic_male.jpeg" : story.photoData}" alt="Veteran's photo">
+            </div>
 <!--            <i class="fas fa-edit"></i>-->
             ${adminControls}
             <div class="card-body">
                 <h4 class="card-title">${story.vetName}</h4>
                 <div class="card-text story-text">
                     <h5>${story.storyTitle}</h5>
+                    ${storyAudioHTML}
                     <p>${storyHTML}</p>
                 </div>
             </div>

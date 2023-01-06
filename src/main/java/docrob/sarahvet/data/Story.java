@@ -21,8 +21,8 @@ public class Story {
     @Column
     private String photoData;
 
-    @Column(nullable = true, length = 256)
-    private String audioName;
+    @Column
+    private String audioData;
 
     @Column(nullable = false, length = 256)
     private String storyTitle;

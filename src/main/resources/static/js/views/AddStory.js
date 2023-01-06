@@ -3,6 +3,7 @@ import CreateView from "../createView.js";
 
 let story = undefined;
 let photoImageData = undefined;
+let audioData = undefined;
 
 export default function addStory(props) {
     story = props.story;
@@ -10,6 +11,11 @@ export default function addStory(props) {
         photoImageData = story.photoData;
     } else {
         photoImageData = undefined;
+    }
+    if(story && story.audioData) {
+        audioData = story.audioData;
+    } else {
+        audioData = undefined;
     }
 
     // console.log(story);
@@ -80,6 +86,15 @@ function generateAddStoryHTML(story) {
                     </div>
                 </div>
                 
+                <div class="mb-3">
+                    <label for="vet_audio_file" class="form-label">Story audio (mp3)</label><br>
+                    <input id="vet_audio_file" name="vet_audio_file" class="form-control" type="file" accept="audio/mpeg">
+                    <audio id="vet_audio" 
+                        controls
+                        src="${!story || !story.audioData ? undefined : story.audioData}">                        
+                    </audio>
+                </div>
+
                 <button data-id="0" id="saveStory" name="saveStory" type="button" class="my-button button btn-primary">Save story</button>
             </form>`;
 
@@ -88,6 +103,7 @@ function generateAddStoryHTML(story) {
 
 export function addStoryEvent() {
     setupImageHandler();
+    setupAudioHandler();
     setupSaveHandler();
 }
 
@@ -100,6 +116,19 @@ function setupImageHandler() {
         reader.addEventListener("load", () => {
             photoImageData = reader.result;
             document.querySelector("#vet_photo").src = photoImageData;
+        });
+        reader.readAsDataURL(this.files[0]);
+    });
+}
+
+function setupAudioHandler() {
+    const audioInput = document.querySelector("#vet_audio_file");
+    audioInput.addEventListener("change", function(event) {
+        const reader = new FileReader();
+
+        reader.addEventListener("load", () => {
+            audioData = reader.result;
+            document.querySelector("#vet_audio").src = audioData;
         });
         reader.readAsDataURL(this.files[0]);
     });
@@ -142,7 +171,8 @@ function saveStory(storyId) {
         vetName: vetName.value,
         storyTitle: storyTitle.value,
         story: storyContent.value,
-        photoData: photoImageData
+        photoData: photoImageData,
+        audioData
     }
 
     // console.log(newStory);

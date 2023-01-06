@@ -38,11 +38,6 @@ public class StoryController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
 
-//        if(newStory.getPhotoImageData() != null) {
-//            String photoFileName = s3Service.uploadFileFromBase64(newStory.getPhotoImageData());
-//            newStory.setPhotoName(photoFileName);
-//        }
-
         newStory.setAuthor(loggedInUser);
         storyRepository.save(newStory);
     }
