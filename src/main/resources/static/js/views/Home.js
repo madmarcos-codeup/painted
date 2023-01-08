@@ -77,7 +77,7 @@ function makeStoryHTML(stories) {
 }
 
 function getCategoryHTML(story) {
-    if(!story || !story.categories) {
+    if(!story || !story.categories || story.categories.length === 0) {
         return "";
     }
     let html = "<h6 class=\"my-category-group\">Categories</h6>";
