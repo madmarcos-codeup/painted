@@ -99,3 +99,10 @@ body {
     /*border: 15px solid grey;*/
     /*box-sizing: border-box;*/
 }
+
+.story-category {
+    margin: 0px 7px 10px 7px;
+    padding: 5px 10px;
+    border-radius: 30%;
+    background-color: darkseagreen;
+}

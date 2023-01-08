@@ -1,5 +1,5 @@
 import Home, {HomeEvents} from "./views/Home.js";
-import PostIndex, {postSetup} from "./views/PostIndex.js";
+// import PostIndex, {postSetup} from "./views/PostIndex.js";
 import About from "./views/About.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
@@ -10,6 +10,7 @@ import prepareUserHTML, {prepareUserJS} from "./views/User.js";
 // import DoLogin, {DoLoginEvents} from "./views/DoLogin.js";
 import Logout, {LogoutEvent} from "./views/Logout.js";
 import addStory, {addStoryEvent} from "./views/AddStory.js";
+import MyURLPattern from "./MyURLPattern.js";
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -57,7 +58,9 @@ export default function router(URI) {
         },
         '/addstory': {
             returnView: addStory,
-            state: {},
+            state: {
+                categories: '/api/categories'
+            },
             uri: '/addstory',
             title: 'Add Story',
             viewEvent: addStoryEvent
@@ -65,7 +68,8 @@ export default function router(URI) {
         '/editstory/:id': {
             returnView: addStory,
             state: {
-                story: '/api/stories/:id'
+                story: '/api/stories/:id',
+                categories: '/api/categories'
             },
             uri: '/editstory/:id',
             title: "Edit Story",
@@ -100,7 +104,44 @@ export default function router(URI) {
         }
     };
 
+    console.log("DEBUG 1");
     if(!routes[URI]) {
+        // console.log("DEBUG 2");
+        // for(const routeKey in routes) {
+        //     console.log("DEBUG: " + routeKey);
+        //     const pattern = new MyURLPattern(routeKey);
+        //     let params = pattern.match(BACKEND_HOST_URL + URI);
+        //     console.log(params);
+        //     if(pattern.regex.test(URI)) {
+        //         console.log(`${URI} MATCHES ${routeKey}`);
+        //
+        //     }
+
+
+            // let params = pattern.match(BACKEND_HOST_URL + URI);
+            // console.log(params);
+            // if(params) {
+            //     // const newPath = pattern.exec(BACKEND_HOST_URL + URI);
+            //     const foundRoute = routes[routeKey];
+            //     for(const statePiece in foundRoute.state) {
+            //         let stateVal = foundRoute.state[statePiece];
+            //         // replace any found group pieces from newPath
+            //         for(const pathVar in params) {
+            //             stateVal = stateVal.replaceAll(`:${pathVar}`, params[pathVar]);
+            //         }
+            //         foundRoute.state[statePiece] = stateVal;
+            //         // console.log("Checking state piece: " + foundRoute.state[statePiece]);
+            //     }
+            //     // modify route.uri
+            //     for(const pathVar in params) {
+            //         foundRoute.uri = foundRoute.uri.replaceAll(`:${pathVar}`, params[pathVar]);
+            //     }
+            //     console.log(foundRoute);
+            //     return foundRoute;
+            // }
+
+
+
         for(const routeKey in routes) {
             const pattern = new URLPattern({ pathname: routeKey });
             if(pattern.test(BACKEND_HOST_URL + URI)) {
@@ -123,7 +164,9 @@ export default function router(URI) {
                 }
                 console.log(foundRoute);
                 return foundRoute;
+
             }
+
         }
         // did not find a route matching the URI so let jalopy determine the error route
     }

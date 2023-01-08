@@ -71,7 +71,7 @@ public class StoryController {
     }
 
     @PutMapping("/{id}")
-    public void updateStory(@RequestBody Story updatedPost, @PathVariable long id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+    public void updateStory(@RequestBody Story updatedStory, @PathVariable long id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
         User loggedInUser = authBuddy.getUserFromAuthHeaderJWT(authHeader);
         if(loggedInUser == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
@@ -91,7 +91,7 @@ public class StoryController {
         originalStory.setId(id);
 
         // copy any new field values FROM updatedPost TO originalPost
-        BeanUtils.copyProperties(updatedPost, originalStory, FieldHelper.getNullPropertyNames(updatedPost));
+        BeanUtils.copyProperties(updatedStory, originalStory, FieldHelper.getNullPropertyNames(updatedStory));
 
         storyRepository.save(originalStory);
     }

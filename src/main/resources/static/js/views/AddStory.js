@@ -4,6 +4,7 @@ import CreateView from "../createView.js";
 let story = undefined;
 let photoImageData = undefined;
 let audioData = undefined;
+let categories = undefined;
 
 export default function addStory(props) {
     story = props.story;
@@ -17,8 +18,9 @@ export default function addStory(props) {
     } else {
         audioData = undefined;
     }
+    categories = props.categories;
 
-    // console.log(story);
+    console.log(story);
 
     const addStoryHTML = generateAddStoryHTML(props.story);
 
@@ -43,7 +45,7 @@ function generateAddStoryHTML(story) {
     //     return addHTML;
     // }
 
-    // const categoryHTML = generateCategoryHTML(categories);
+    const categoryHTML = generateCategoryHTML(categories);
 
     addHTML = `
             <form id="addstory-form">
@@ -95,10 +97,42 @@ function generateAddStoryHTML(story) {
                     </audio>
                 </div>
 
-                <button data-id="0" id="saveStory" name="saveStory" type="button" class="my-button button btn-primary">Save story</button>
+            <h6 class="my-category-group">Categories</h6>
+                ${categoryHTML}
+                
+                
+                <button data-id="0" id="saveStory" name="saveStory" type="button" class="mt-3 my-button button btn-primary">Save story</button>
             </form>`;
 
     return addHTML;
+}
+
+function generateCategoryHTML(categories) {
+    let catHTML = ``;
+    if(!categories) {
+        return catHTML;
+    }
+    for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+
+        let checked = "";
+        if(story && story.categories) {
+            for (let j = 0; j < story.categories.length; j++) {
+                if (story.categories[j].id === category.id) {
+                    checked = "checked";
+                }
+            }
+        }
+
+        catHTML += `
+            <div class="form-check">
+                <input class="form-check-input category-checkbox" type="checkbox" ${checked} value="" data-id="${category.id}" id="category_${category.id}">
+                <label class="form-check-label" for="flexCheckDefault">
+                    ${category.name}
+                </label>
+            </div>`;
+    }
+    return catHTML;
 }
 
 export function addStoryEvent() {
@@ -150,6 +184,8 @@ function saveStory(storyId) {
     const storyTitle = document.querySelector("#story_title");
     const storyContent = document.querySelector("#story_content");
 
+    const selectedCategories = getSelectedCategories();
+
     // don't allow save if title or content are invalid
     // if(!validateFields()) {
     //     return;
@@ -172,7 +208,8 @@ function saveStory(storyId) {
         storyTitle: storyTitle.value,
         story: storyContent.value,
         photoData: photoImageData,
-        audioData
+        audioData,
+        categories: selectedCategories
     }
 
     // console.log(newStory);
@@ -205,4 +242,21 @@ function saveStory(storyId) {
             }
             CreateView("/");
         })
+}
+
+function getSelectedCategories() {
+    let cats = [];
+    const checkboxes = document.querySelectorAll(".category-checkbox");
+
+    for (let i = 0; i < checkboxes.length; i++) {
+        const checkbox = checkboxes[i];
+        if(checkbox.checked) {
+            const id = checkbox.getAttribute("data-id");
+            const cat = {
+                id
+            }
+            cats.push(cat);
+        }
+    }
+    return cats;
 }

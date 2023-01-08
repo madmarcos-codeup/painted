@@ -36,6 +36,8 @@ function makeStoryHTML(stories) {
 `;
         }
 
+        const categoryHTML = getCategoryHTML(story);
+
         const storyHTML = story.story.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
         let storyAudioHTML = "";
@@ -62,11 +64,27 @@ function makeStoryHTML(stories) {
                     <h5>${story.storyTitle}</h5>
                     ${storyAudioHTML}
                     <p>${storyHTML}</p>
+                    
+                    <div id="category-container d-flex flex-wrap">
+                        ${categoryHTML}
+                    </div>
                 </div>
             </div>
         </div>
 `;
     }
+    return html;
+}
+
+function getCategoryHTML(story) {
+    if(!story || !story.categories) {
+        return "";
+    }
+    let html = "<h6 class=\"my-category-group\">Categories</h6>";
+    for (let i = 0; i < story.categories.length; i++) {
+        html += `<span class="story-category">${story.categories[i].name}</span>`;
+    }
+        
     return html;
 }
 
